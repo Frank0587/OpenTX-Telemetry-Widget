@@ -143,6 +143,23 @@ local function playLog(data, config, distCalc, date)
 	 if data.a4_id > -1 then
 	    data.cell = toNum(record[label.a4])
 	 end
+	 
+	 if data.battMin > data.batt then
+		data.battMin = data.batt
+	 end
+	 if data.currentMax < data.current then
+	 	data.currentMax = data.current
+	 end
+	 if data.altitudeMax < data.altitude then
+	 	data.altitudeMax = data.altitude
+	 end
+	 if data.distanceMax < data.distance then
+	 	data.distanceMax = data.distance
+	 end
+	 if data.speedMax < data.speed then
+	 	data.speedMax = data.speed
+	 end
+
 	 if record[label.gps] ~= nil then
 	    pos = string.find(record[label.gps], " ")
 	    if pos ~= nil then
