@@ -32,7 +32,7 @@ local log = getDateTime()
 config[34].x = -1
 local mbase = data.etx and model.getInfo().name or string.gsub(model.getInfo().name, " ", "_")
 local path = "/LOGS/" .. mbase .. "-20"
-for days = 1, 15 do
+for days = 1, 90 do
    local logDate = string.sub(log.year, 3) .. "-" .. string.sub("0" .. log.mon, -2) .. "-" .. string.sub("0" .. log.day, -2)
    local fh = io.open(path .. logDate .. ".csv")
    if fh ~= nil then
@@ -41,7 +41,7 @@ for days = 1, 15 do
       collectgarbage()
       config[34].x = config[34].x + 1
       config[34].l[config[34].x] = logDate
-      if config[34].x == 5 then break end
+      if config[34].x == 9 then break end
    end
    
    log.day = log.day - 1
