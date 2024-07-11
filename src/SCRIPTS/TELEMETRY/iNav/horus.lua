@@ -275,6 +275,7 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 	end
 
 	-- Calculate the maximum distance for scaling home location and map
+	-- distRef: 6m oder 20ft
 	local maxDist = max(min(data.distanceMax, data.distanceLast * 6), data.distRef * 10)
 
 	-- Home direction
@@ -421,10 +422,16 @@ local function view(data, config, modes, dir, units, labels, gpsDegMin, hdopGrap
 			text(RIGHT_POS + 2, BOTTOM - 46, floor(data.altMax + 0.5) .. units[data.alt_unit], data.set_flags(SMLSIZE + RIGHT, data.TextColor))
 		end
 
+
+		-- Calculate the maximum distance for scaling home location and map
+		-- distRef: 6m oder 20ft
+		-- local maxDist = max(min(data.distanceMax, data.distanceLast * 6), data.distRef * 10)
+		-- also: 60m bis 6x lastDist
+
 		if data.gpsHome ~= false then
 			-- Craft location
 			tmp2 = config[31].v == 1 and 50 or 100
-			d = data.distanceLast >= data.distRef and min(max(data.distanceLast / maxDist * tmp2, 7), tmp2) or 1
+			d = data.distanceLast >= data.distRef and min(max(3 * data.distanceLast / maxDist * tmp2, 7), tmp2) or 1
 			local bearing = calcBearing(data.gpsHome, data.gpsLatLon) - tmp
 			local rad1 = rad(bearing)
 			cx = floor(sin(rad1) * d + 0.5)
