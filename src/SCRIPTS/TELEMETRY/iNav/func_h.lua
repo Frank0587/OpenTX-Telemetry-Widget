@@ -132,6 +132,7 @@ data.hcurx_id = getFieldInfo("ail").id
 data.hcury_id = getFieldInfo("ele").id
 data.hctrl_id = getFieldInfo("rud").id
 data.t6_id = getFieldInfo("trim-t6") ~= nil and getFieldInfo("trim-t6").id or nil
+data.sd_id = getFieldInfo("sd") ~= nil and getFieldInfo("sd").id or nil
 data.lastevt = 0
 data.lastt6 = nil
 
@@ -196,7 +197,8 @@ function data.clear(event)
 				data.lastevt = event
 			end
 		end
-		if data.t6_id ~= nil then
+		-- switching with Trim-T6 possible with Switch-D at middle position only
+		if data.t6_id ~= nil and data.sd_id ~= nil and getValue(data.sd_id) < 200 and getValue(data.sd_id) > -200 then 
 		   if event == 0 and data.lastt6 ~= nil then
 		      if getValue(data.t6_id) > data.lastt6 then
 			 event = data.nv and EVT_VIRTUAL_PREV or EVT_ROT_LEFT -- Up
